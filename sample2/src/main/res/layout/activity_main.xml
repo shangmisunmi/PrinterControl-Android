@@ -4,48 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/usb"
-        android:layout_width="200dp"
+        android:id="@+id/func1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Usb"
-        android:onClick="usb"
+        android:text="CloudPrinter"
+        android:onClick="setCloudPrinter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-    <Button
-        android:id="@+id/bluetooth"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="bluetooth"
-        android:onClick="bluetooth"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/usb"/>
-    <Button
-        android:id="@+id/net"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="net"
-        android:onClick="net"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bluetooth"/>
 
     <Button
-        android:id="@+id/connect"
-        android:layout_width="200dp"
+        android:id="@+id/func2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NetPrinter"
+        android:onClick="setNetPrinter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/func1"/>
+
+    <Button
+        android:id="@+id/func3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BTprinter"
+        android:onClick="setBTPrinter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/func2"/>
+
+    <Button
+        android:id="@+id/func4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="connect"
         android:onClick="connect"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/net"/>
+        app:layout_constraintTop_toBottomOf="@id/func3"/>
 
     <Button
-        android:layout_width="200dp"
+        android:id="@+id/func5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="print"
-        android:onClick="print"
+        android:text="test"
+        android:onClick="test"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/connect"/>
+        app:layout_constraintTop_toBottomOf="@id/func4"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
