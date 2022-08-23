@@ -1,19 +1,24 @@
 package com.test.ui
 
+import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.test.control.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.test.R
+import com.test.control.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -23,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private var receiver: BroadcastReceiver? = null
     private lateinit var mBluetoothAdapter: BluetoothAdapter
     private val service: ExecutorService = Executors.newSingleThreadExecutor()
+    private val PM_SINGLE: String = Manifest.permission.ACCESS_FINE_LOCATION
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +85,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchBT() {
+        val ret = ContextCompat.checkSelfPermission(this, PM_SINGLE)
+        if(ret != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(PM_SINGLE),10000)
+            return
+        }
         if(mBluetoothAdapter.isDiscovering) {
             mBluetoothAdapter.cancelDiscovery()
         }
@@ -114,6 +125,21 @@ class MainActivity : AppCompatActivity() {
 
         }
         nsdManager.discoverServices(SERVICE_TYPE,  NsdManager.PROTOCOL_DNS_SD, discoveryListener)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == 10000) {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                searchBT()
+            } else {
+                Toast.makeText(this, "Bluetooth PERMISSION DENIED", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
